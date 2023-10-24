@@ -1,0 +1,4 @@
+Domain1 rndserv.my.id
+Domain2 rndserv.cloud
+
+Jumlah 2
