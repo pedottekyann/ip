@@ -1,22 +1,6 @@
 #!/bin/bash
-### Color
-Green="\e[92;1m"
-RED="\033[31m"
-YELLOW="\033[33m"
-BLUE="\033[36m"
-FONT="\033[0m"
-GREENBG="\033[42;37m"
-REDBG="\033[41;37m"
-OK="${Green}--->${FONT}"
-ERROR="${RED}[ERROR]${FONT}"
-GRAY="\e[1;30m"
-NC='\e[0m'
-red='\e[1;31m'
-green='\e[0;32m'
-# ===================
-MYIP=$(curl -sS ipv4.icanhazip.com)
 
-# // String / Request Data
+MYIP=$(wget -qO- ipinfo.io/ip)
 export Random_Number=$( </dev/urandom tr -dc 1-$( curl -s https://raw.githubusercontent.com/pedottekyann/ip/main/domen.txt | grep -E Jumlah | cut -d " " -f 2 | tail -n1 ) | head -c1 | tr -d '\r\n' | tr -d '\r');
 export Domain_Hasil_Random=$( curl -s curl -s https://raw.githubusercontent.com/pedottekyann/ip/main/domen.txt | grep -E Domain$Random_Number | cut -d " " -f 2 | tr -d '\r' | tr -d '\r\n');
 export DOMAIN_BARU="$(</dev/urandom tr -dc a-x1-9 | head -c7 | tr -d '\r' | tr -d '\r\n').${Domain_Hasil_Random}";
