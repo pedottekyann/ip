@@ -1,0 +1,15 @@
+export Random_Number=$( </dev/urandom tr -dc 1-$( curl -s https://raw.githubusercontent.com/pedottekyann/ip/main/domen.txt | grep -E Jumlah | cut -d " " -f 2 | tail -n1 ) | head -c1 | tr -d '\r\n' | tr -d '\r');
+export Domain_Hasil_Random=$( curl -s curl -s https://raw.githubusercontent.com/pedottekyann/ip/main/domen.txt | grep -E Domain$Random_Number | cut -d " " -f 2 | tr -d '\r' | tr -d '\r\n');
+export DOMAIN_BARU="$(</dev/urandom tr -dc a-x1-9 | head -c7 | tr -d '\r' | tr -d '\r\n').${Domain_Hasil_Random}";
+export EMAIL_CLOUDFLARE="gckcfssgdg@gmail.com";
+export API_KEY_CLOUDFLARE="87008529ee77c45809a436a98d74036d9976e";
+
+# // DNS Only Mode
+export ZONA_ID=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${Domain_Hasil_Random}&status=active" -H "X-Auth-Email: ${EMAIL_CLOUDFLARE}" -H "X-Auth-Key: ${API_KEY_CLOUDFLARE}" -H "Content-Type: application/json" | jq -r .result[0].id );
+export RECORD=$(curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONA_ID}/dns_records" -H "X-Auth-Email: ${EMAIL_CLOUDFLARE}" -H "X-Auth-Key: ${API_KEY_CLOUDFLARE}" -H "Content-Type: application/json" --data '{"type":"A","name":"'${DOMAIN_BARU}'","content":"'${MYIP}'","ttl":0,"proxied":false}' | jq -r .result.id);
+export RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONA_ID}/dns_records/${RECORD}" -H "X-Auth-Email: ${EMAIL_CLOUDFLARE}" -H "X-Auth-Key: ${API_KEY_CLOUDFLARE}" -H "Content-Type: application/json" --data '{"type":"A","name":"'${DOMAIN_BARU}'","content":"'${MYIP}'","ttl":0,"proxied":false}');
+
+# // WildCard Mode
+export ZONA_ID=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${Domain_Hasil_Random}&status=active" -H "X-Auth-Email: ${EMAIL_CLOUDFLARE}" -H "X-Auth-Key: ${API_KEY_CLOUDFLARE}" -H "Content-Type: application/json" | jq -r .result[0].id );
+export RECORD=$(curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONA_ID}/dns_records" -H "X-Auth-Email: ${EMAIL_CLOUDFLARE}" -H "X-Auth-Key: ${API_KEY_CLOUDFLARE}" -H "Content-Type: application/json" --data '{"type":"A","name":"'*.${DOMAIN_BARU}'","content":"'${MYIP}'","ttl":0,"proxied":false}' | jq -r .result.id);
+export RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONA_ID}/dns_records/${RECORD}" -H "X-Auth-Email: ${EMAIL_CLOUDFLARE}" -H "X-Auth-Key: ${API_KEY_CLOUDFLARE}" -H "Content-Type: application/json" --data '{"type":"A","name":"'*.${DOMAIN_BARU}'","content":"'${MYIP}'","ttl":0,"proxied":false}');
