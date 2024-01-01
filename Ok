@@ -1,26 +1,25 @@
-#!/bin/bash
-MYIP=$(wget -qO- ipinfo.io/ip)
-# // String / Request Data
-export Random_Number=$( </dev/urandom tr -dc 1-$( curl -s https://raw.githubusercontent.com/pedottekyann/ip/main/domen.txt | grep -E Jumlah | cut -d " " -f 2 | tail -n1 ) | head -c1 | tr -d '\r\n' | tr -d '\r');
-export Domain_Hasil_Random=$( curl -s curl -s https://raw.githubusercontent.com/pedottekyann/ip/main/domen.txt | grep -E Domain$Random_Number | cut -d " " -f 2 | tr -d '\r' | tr -d '\r\n');
-export DOMAIN_BARU="$(</dev/urandom tr -dc a-x1-9 | head -c7 | tr -d '\r' | tr -d '\r\n').${Domain_Hasil_Random}";
-export EMAIL_CLOUDFLARE="padmasariyani678@gmail.com";
-export API_KEY_CLOUDFLARE="855bd2da5b0769a7a7edd011eec29451c41b3";
-
-# // DNS Only Mode
-export ZONA_ID=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${Domain_Hasil_Random}&status=active" -H "X-Auth-Email: ${EMAIL_CLOUDFLARE}" -H "X-Auth-Key: ${API_KEY_CLOUDFLARE}" -H "Content-Type: application/json" | jq -r .result[0].id );
-export RECORD=$(curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONA_ID}/dns_records" -H "X-Auth-Email: ${EMAIL_CLOUDFLARE}" -H "X-Auth-Key: ${API_KEY_CLOUDFLARE}" -H "Content-Type: application/json" --data '{"type":"A","name":"'${DOMAIN_BARU}'","content":"'${MYIP}'","ttl":0,"proxied":false}' | jq -r .result.id);
-export RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONA_ID}/dns_records/${RECORD}" -H "X-Auth-Email: ${EMAIL_CLOUDFLARE}" -H "X-Auth-Key: ${API_KEY_CLOUDFLARE}" -H "Content-Type: application/json" --data '{"type":"A","name":"'${DOMAIN_BARU}'","content":"'${MYIP}'","ttl":0,"proxied":false}');
-
-# // WildCard Mode
-export ZONA_ID=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${Domain_Hasil_Random}&status=active" -H "X-Auth-Email: ${EMAIL_CLOUDFLARE}" -H "X-Auth-Key: ${API_KEY_CLOUDFLARE}" -H "Content-Type: application/json" | jq -r .result[0].id );
-export RECORD=$(curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONA_ID}/dns_records" -H "X-Auth-Email: ${EMAIL_CLOUDFLARE}" -H "X-Auth-Key: ${API_KEY_CLOUDFLARE}" -H "Content-Type: application/json" --data '{"type":"A","name":"'*.${DOMAIN_BARU}'","content":"'${MYIP}'","ttl":0,"proxied":false}' | jq -r .result.id);
-export RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONA_ID}/dns_records/${RECORD}" -H "X-Auth-Email: ${EMAIL_CLOUDFLARE}" -H "X-Auth-Key: ${API_KEY_CLOUDFLARE}" -H "Content-Type: application/json" --data '{"type":"A","name":"'*.${DOMAIN_BARU}'","content":"'${MYIP}'","ttl":0,"proxied":false}');
-
-# // Input Result To VPS
-echo $DOMAIN_BARU >/etc/xray/domain
-echo "Subdomain kamu adalah : $DOMAIN_BARU"
-sleep 3
-rm -f /root/cf
-
-
+# Instal DDOS Flate
+if [ -d '/usr/local/ddos' ]; then
+	echo; echo; echo "Please un-install the previous version first"
+	exit 0
+else
+	mkdir /usr/local/ddos
+fi
+clear
+echo; echo 'Installing DOS-Deflate 0.6'; echo
+echo; echo -n 'Downloading source files...'
+wget -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
+echo -n '.'
+wget -q -O /usr/local/ddos/LICENSE http://www.inetbase.com/scripts/ddos/LICENSE
+echo -n '.'
+wget -q -O /usr/local/ddos/ignore.ip.list http://www.inetbase.com/scripts/ddos/ignore.ip.list
+echo -n '.'
+wget -q -O /usr/local/ddos/ddos.sh http://www.inetbase.com/scripts/ddos/ddos.sh
+chmod 0755 /usr/local/ddos/ddos.sh
+cp -s /usr/local/ddos/ddos.sh /usr/local/sbin/ddos
+echo '...done'
+echo; echo -n 'Creating cron to run script every minute.....(Default setting)'
+/usr/local/ddos/ddos.sh --cron > /dev/null 2>&1
+echo '.....done'
+echo; echo 'Installation has completed.'
+echo 'Config file is at /usr/local/ddos/ddos.conf'
