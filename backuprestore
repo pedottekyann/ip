@@ -1,0 +1,242 @@
+#!/bin/bash
+# // font color configuration
+HOST="$(cat /etc/xray/domain)"
+DATEVPS=$(date +"%d-%B-%Y")
+ISPVPS=$(cat /etc/xray/isp)
+CITY=$(cat /etc/xray/city)
+RED='\033[0;91m'
+NC='\033[0m'
+Black='\e[0;30m'
+Blue='\033[0;36m'
+Ungu='\033[0;35m'
+GREEN='\033[0;92m'
+yellow='\033[0;93m'
+sian='\e[94m'
+Magenta='\033[0;95m'
+IPVPS=$(curl -s ipv4.icanhazip.com)
+Name=$(curl -sS https://raw.githubusercontent.com/xlosx/Registrasi/main/ipvip | grep $IPVPS | awk '{print $6}')
+CEKEXPIRED () {
+    today=$(date -d +0day +%Y-%m-%d)
+    Exp1=$(curl -sS https://raw.githubusercontent.com/xlosx/Registrasi/main/ipvip | grep $IPVPS | awk '{print $4}')
+    if [[ $today < $Exp1 ]]; then
+    clear
+    else
+    clear
+    echo -e " 
+ ${sian}┌─────────────────────────────────────────────────────────┐${NC}
+${sian}─│${NC}                        ${Magenta}WELCOME TO${NC}                       ${sian}│─${NC}
+${sian}─│${NC}    ${yellow}┌─┐┬ ┬┌┬┐┌─┐┌─┐┌─┐┬─┐┬┌─┐┌┬┐  ┌─┐┬─┐┌─┐┌┬┐┬┬ ┬┌┬┐${NC}    ${sian}│─${NC}
+${sian}─│${NC}    ${yellow}├─┤│ │ │ │ │└─┐│  ├┬┘│├─┘ │   ├─┘├┬┘├┤ │││││ ││││${NC}    ${sian}│─${NC}
+${sian}─│${NC}    ${yellow}┴ ┴└─┘ ┴ └─┘└─┘└─┘┴└─┴┴   ┴   ┴  ┴└─└─┘┴ ┴┴└─┘┴ ┴${NC}    ${sian}│─${NC}
+ ${sian}└─────────────────────────────────────────────────────────┘${NC}
+                      ${GREEN}INFORMASI LISENSI${NC}
+─────────────────────────────────────────────────────────────
+     ${yellow}Dear, $Name ($IPVPS)${NC}
+ ${RED}Lisensi anda telah kadaluarsa [EXP]
+ Fitur-Fitur Unggulan Akan Dinonaktifkan Sementara
+ Silahkan Perpanjang Masa Aktif Script Anda Agar Fitur-Fitur
+ Dapat Diaktifkan Kembali.${NC}
+─────────────────────────────────────────────────────────────"
+    echo " "
+fi
+}
+IZIN=$(curl -sS https://raw.githubusercontent.com/xlosx/Registrasi/main/ipvip | awk '{print $2}' | grep $IPVPS)
+if [[ $IPVPS = $IZIN ]]; then
+clear
+CEKEXPIRED
+else
+clear
+echo -e "
+ ${sian}┌─────────────────────────────────────────────────────────┐${NC}
+${sian}─│${NC}                        ${Magenta}WELCOME TO${NC}                       ${sian}│─${NC}
+${sian}─│${NC}    ${yellow}┌─┐┬ ┬┌┬┐┌─┐┌─┐┌─┐┬─┐┬┌─┐┌┬┐  ┌─┐┬─┐┌─┐┌┬┐┬┬ ┬┌┬┐${NC}    ${sian}│─${NC}
+${sian}─│${NC}    ${yellow}├─┤│ │ │ │ │└─┐│  ├┬┘│├─┘ │   ├─┘├┬┘├┤ │││││ ││││${NC}    ${sian}│─${NC}
+${sian}─│${NC}    ${yellow}┴ ┴└─┘ ┴ └─┘└─┘└─┘┴└─┴┴   ┴   ┴  ┴└─└─┘┴ ┴┴└─┘┴ ┴${NC}    ${sian}│─${NC}
+${sian}─│${NC}          ${RED}POWERRED BY HKVPN${NC} | ${GREEN}TELEGRAM: @Hkhafy${NC}          ${sian}│─${NC}
+ ${sian}└─────────────────────────────────────────────────────────┘${NC}
+                      ${GREEN}INFORMASI LISENSI${NC}
+${sian}─────────────────────────────────────────────────────────────${NC}
+                     ${GREEN}IPVPS${NC} ${yellow}$IPVPS${NC}
+            ${RED}PERIZINAN DI TOLAK OLEH SISTEM KAMI
+  UNTUK SAAT INI AUTOSCRIPT TIDAK BISA DIJALANKAN DIVPS INI
+ SILAHKAN REGISTRASI IPVPS ANDA AGAR DAPAT MENIKMATI LAYANAN
+                      PREMIUM DARI KAMI.${NC}
+${sian}─────────────────────────────────────────────────────────────${NC}
+                      ${yellow}KONTAK REGISTRASI${NC}
+                      ${Blue}Telegram: @Hkhafy${NC}
+${sian}─────────────────────────────────────────────────────────────${NC}"
+echo " "
+fi
+
+function QUESTION() {
+    clear
+    echo -e " ${sian}┌─────────────────────────────────────────────────────────┐${NC}
+${sian}─│${NC}                        ${Magenta}WELCOME TO${NC}                       ${sian}│─${NC}
+${sian}─│${NC}    ${yellow}┌─┐┬ ┬┌┬┐┌─┐┌─┐┌─┐┬─┐┬┌─┐┌┬┐  ┌─┐┬─┐┌─┐┌┬┐┬┬ ┬┌┬┐${NC}    ${sian}│─${NC}
+${sian}─│${NC}    ${yellow}├─┤│ │ │ │ │└─┐│  ├┬┘│├─┘ │   ├─┘├┬┘├┤ │││││ ││││${NC}    ${sian}│─${NC}
+${sian}─│${NC}    ${yellow}┴ ┴└─┘ ┴ └─┘└─┘└─┘┴└─┴┴   ┴   ┴  ┴└─└─┘┴ ┴┴└─┘┴ ┴${NC}    ${sian}│─${NC}
+ ${sian}└─────────────────────────────────────────────────────────┘${NC}
+ ${sian}┌─────────────────────────────────────────────────────────┐${NC}
+ ${sian}│${NC}                 ${GREEN}BACKUP DATA & SERVER VPS${NC}                ${sian}│${NC}
+ ${sian}└─────────────────────────────────────────────────────────┘${NC}
+                SALAM HANGAT [RECOD COMUNITY]
+       TOKEN AKAN DITAMPILKAN SETELAH SELESAI BACKUP
+ SIMPAN DENGAN BAIK DAN GUNAKAN SAAT INGIN MERESTORE VPS ANDA"
+    read -n 1 -s -r -p "  Press any key to Continue"
+    clear 
+    echo -e "   [${yellow}INFO${NC}] ${GREEN}Backup Sedang Di Proses Mohon Tunggu.${NC}"
+}
+
+function QUESTION2() {
+    clear
+    echo -e " ${sian}┌─────────────────────────────────────────────────────────┐${NC}
+${sian}─│${NC}                        ${Magenta}WELCOME TO${NC}                       ${sian}│─${NC}
+${sian}─│${NC}    ${yellow}┌─┐┬ ┬┌┬┐┌─┐┌─┐┌─┐┬─┐┬┌─┐┌┬┐  ┌─┐┬─┐┌─┐┌┬┐┬┬ ┬┌┬┐${NC}    ${sian}│─${NC}
+${sian}─│${NC}    ${yellow}├─┤│ │ │ │ │└─┐│  ├┬┘│├─┘ │   ├─┘├┬┘├┤ │││││ ││││${NC}    ${sian}│─${NC}
+${sian}─│${NC}    ${yellow}┴ ┴└─┘ ┴ └─┘└─┘└─┘┴└─┴┴   ┴   ┴  ┴└─└─┘┴ ┴┴└─┘┴ ┴${NC}    ${sian}│─${NC}
+ ${sian}└─────────────────────────────────────────────────────────┘${NC}
+ ${sian}┌─────────────────────────────────────────────────────────┐${NC}
+ ${sian}│${NC}                ${GREEN}RESTORE DATA & SERVER VPS${NC}                ${sian}│${NC}
+ ${sian}└─────────────────────────────────────────────────────────┘${NC}
+          SILAHKAN MASUKKAN TOKEN YANG ANDA MILIKI
+     PASSWORD VPS AKAN MENGIKUTI PASSWORD VPS SEBELUMNYA
+            PASTIKAN ANDA INGAT PASSWORD TERSEBUT"
+    read -p "  Silahkan Masukkan TOKEN ID : " idrestore
+
+}
+function send_log(){
+    CHATID=6686524725
+    KEY=6824436076:AAHKem14f8d-s9DXnjmXcAO--Tvp4wLlJj4
+    TIME="10"
+    URL="https://api.telegram.org/bot$KEY/sendMessage"
+    TEXT="
+<code>───────────────────────</code>
+   ⚠️ <b>   BACKUP DATAVPS</b> ⚠️
+<code>───────────────────────</code>
+<code>IP VPS   :</code> <code>${IPVPS}</code>
+<code>Domain   :</code> <code>${HOST}</code>
+<code>Time     :</code> <code>$(date +'%H:%M:%S')</code>
+<code>Tanggal  :</code> <code>$DATEVPS</code>
+<code>Nama ISP :</code> <code>${ISPVPS}</code>
+<code>LOCATION :</code> <code>${CITY}</code>
+<code>───────────────────────</code>
+<code>TOKEN ID :</code> <code>${id}</code>
+<code>───────────────────────</code>
+"
+    curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+}
+function BACKUPVPS() {
+    mkdir -p /root/backup
+    cp -r /etc/xray/config.json backup/ >/dev/null 2>&1
+    cp /etc/passwd backup/
+    cp /etc/group backup/
+    cp /etc/shadow backup/
+    cp /etc/gshadow backup/
+    cp -r /etc/sshku backup/sshku
+    cp -r /etc/vmess backup/vmess
+    cp -r /etc/vless backup/vless
+    cp -r /etc/trojan backup/trojan
+    cp -r /etc/shadowsocks backup/shadowsocks
+    cp -r /etc/limit backup/limit
+    cp -r /var/www/html/user backup/user
+    cd /root
+    zip -r Backup-${IPVPS}-${DATEVPS}.zip backup >/dev/null 2>&1
+    rclone copy /root/Backup-${IPVPS}-${DATEVPS}.zip gd:Backup/
+    url=$(rclone link gd:Backup/Backup-${IPVPS}-${DATEVPS}.zip)
+    id=($(echo $url | grep '^https' | cut -d'=' -f2))
+    LINKBACKUP="https://drive.google.com/u/4/uc?id=${id}&export=download"
+    rm -rf *
+    clear
+
+    echo -e "${sian}┌──────────────────────────────────────┐${NC}
+${sian}│${NC}        ${GREEN}DETAIL BACKUP DATA VPS${NC}        ${sian}│${NC}
+${sian}│${NC} ${GREEN}Mohon simpan data backup dibawah ini${NC} ${sian}│${NC}
+${sian}└──────────────────────────────────────┘${NC}
+  ${Magenta}Your VPS IP${NC}: ${yellow}$IPVPS${NC}
+  ${Magenta}DOMAIN${NC}     : ${yellow}$HOST${NC}
+  ${Magenta}DATE${NC}       : ${yellow}$DATEVPS${NC}
+  ${Magenta}ISP${NC}        : ${yellow}$ISPVPS${NC}
+  ${Magenta}LOCATION${NC}   : ${yellow}$CITY${NC}
+  ${Magenta}TOKEN ID${NC}   : ${yellow}$id${NC}
+${sian}┌──────────────────────────────────────┐${NC}
+${sian}│${NC}    ${RED}TOKEN ID JANGAN SAMPAI HILANG${NC}     ${sian}│${NC}
+${sian}└──────────────────────────────────────┘${NC}"
+send_log
+}
+
+function RESTOREVPS() {
+    wget -O backup.zip "https://drive.google.com/u/4/uc?id=${idrestore}&export=download" >/dev/null 2>&1
+    unzip *.zip >/dev/null 2>&1
+    rm -f *.zip >/dev/null 2>&1
+    cd /root/backup
+    cp passwd /etc/
+    cp group /etc/
+    cp shadow /etc/
+    cp gshadow /etc/
+    cp -r sshku /etc/
+    cp -r vmess /etc/
+    cp -r vless /etc/
+    cp -r trojan /etc/
+    cp -r shadowsocks /etc/
+    cp -r limit /etc/
+    mv *.json /etc/xray >/dev/null
+    cp -r user /var/www/html/
+    systemctl restart xray >/dev/null 2>&1
+    systemctl restart haproxy >/dev/null 2>&1
+    cd
+    rm -rf *
+    clear
+    echo -e "${sian}┌──────────────────────────────────────┐${NC}
+${sian}│${NC}     ${GREEN}SUCCESSFULL RESTORE YOUR VPS${NC}     ${sian}│${NC}
+${sian}└──────────────────────────────────────┘${NC}
+  ${Magenta}Your VPS IP${NC}: ${yellow}$IPVPS${NC}
+  ${Magenta}DOMAIN${NC}     : ${yellow}$HOST${NC}
+  ${Magenta}DATE${NC}       : ${yellow}$DATEVPS${NC}
+  ${Magenta}ISP${NC}        : ${yellow}$ISPVPS${NC}
+  ${Magenta}LOCATION${NC}   : ${yellow}$CITY${NC}
+  ${Magenta}TOKEN ID${NC}   : ${yellow}$idrestore${NC}
+${sian}┌──────────────────────────────────────┐${NC}
+${sian}│${NC}             ${GREEN}HKVPN TUNNELING${NC}          ${sian}│${NC}
+${sian}└──────────────────────────────────────┘${NC}
+ ${RED}Please Reboot Vps${NC}"
+}
+
+if [ -f /etc/chatid.txt ]; then
+    STAT2="${GREEN}[RUN]$NC"
+else
+    STAT2="${RED}[OFF]$NC"
+fi
+clear
+echo -e "${sian}┌─────────────────────────────────────────────────────────┐${NC}"
+echo -e "${sian}│${NC}           ${GREEN}BACKUP DATA VPS & RESTORE DATA VPS${NC}            ${sian}│${NC}"
+echo -e "${sian}└─────────────────────────────────────────────────────────┘${NC}"
+   echo -e "${Blue}[1]${NC} ${RED}• ${NC}Backup Data VPS${NC}"
+   echo -e "${Blue}[2]${NC} ${RED}• ${NC}Restore Data VPS${NC}"
+   echo -e "${Blue} ${NC}"
+   echo -e "${Blue}[0]${NC} ${RED}• ${NC}Kembali Ke Menu${NC}"
+ echo -e "${sian}┌─────────────────────────────────────────────────────────┐${NC}"
+ echo -e "${sian}│${NC}                     ${GREEN}HKVPN TUNNELING${NC}                     ${sian}│${NC}"
+ echo -e "${sian}└─────────────────────────────────────────────────────────┘${NC}"
+read -p "Select From Options [ 1 - 3 ] : " OPT_MENU
+echo -e ""
+case $OPT_MENU in
+1)
+    QUESTION
+    BACKUPVPS
+    ;;
+2)
+    QUESTION2
+    RESTOREVPS
+    ;;
+0)
+    menu
+    ;;
+*)
+    echo -e "${GREEN}You wrong command !${NC}"
+    sleep 2
+    backuprestore
+    ;;
+esac
+echo ""
+read -n 1 -s -r -p "Press any key to back on menu"
+menu
