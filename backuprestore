@@ -127,18 +127,10 @@ function send_log(){
 }
 function BACKUPVPS() {
     mkdir -p /root/backup
-    cp -r /etc/xray/config.json backup/ >/dev/null 2>&1
     cp /etc/passwd backup/
     cp /etc/group backup/
     cp /etc/shadow backup/
     cp /etc/gshadow backup/
-    cp -r /etc/sshku backup/sshku
-    cp -r /etc/vmess backup/vmess
-    cp -r /etc/vless backup/vless
-    cp -r /etc/trojan backup/trojan
-    cp -r /etc/shadowsocks backup/shadowsocks
-    cp -r /etc/limit backup/limit
-    cp -r /var/www/html/user backup/user
     cd /root
     zip -r Backup-${IPVPS}-${DATEVPS}.zip backup >/dev/null 2>&1
     rclone copy /root/Backup-${IPVPS}-${DATEVPS}.zip gd:Backup/
